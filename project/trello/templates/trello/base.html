@@ -29,11 +29,12 @@
         <!--container div-->
         <div class="container-fluid">
             <!--Div for all lists-->
-            <div class="alllistDiv">
+            <div class="row alllistDiv">
              {% if alllist %}
               {% for list in alllist %}
                 <!--div for one list-->
                 <div class="oneList col-md-2 col-sm-3 col-xs-4">
+                    <section class="wrapper">
                     <div class="listHeader">
                         <h4>{{ list.name }}</h4>
 
@@ -41,25 +42,32 @@
                         <div class="dropdown pull-right">
                           <button class="btn btn-primary dropdown-toggle dropMenuList" type="button" data-toggle="dropdown">...
                           </button>
-                          <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="#">HTML</a></li>
-                            <li><a href="#">CSS</a></li>
-                            <li><a href="#">JavaScript</a></li>
+                          <ul class="dropdown-menu dropdown-menu-right" id="dropMenuList">
+                            <li class="dropdown-header">Action list</li>
+                            <li class="divider"></li>
+                            <li><a href="#">Copy list</a></li>
+                            <li><a href="#">Delete list</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Cards list</li>
+                            <li class="divider"></li>
+                            <li><a href="#">Move all cards</a></li>
+                            <li><a href="#">Delete all cards</a></li>
                           </ul>
                         </div>
                         <!--end of menu-->
+
+                        <!--card list-->
                         <div class="cardList">
-
-
                             {% if list.card_set.all %}
-                                <ul>
+
+                                <ul class="list-group" >
                                 {% for card in list.card_set.all %}
-                                    <li>{{ card.name }}</li>
+                                    <li class="list-group-item">{{ card.name }} <span class="glyphicon glyphicon-pencil"></span> </li>
                                 {% endfor %}
                                 </ul>
                             {% endif %}
-
                         </div>
+
                     </div>
                     <!--card form-->
                     <div class="cardFormContainer">
@@ -71,24 +79,28 @@
                         </form>
                     </div>
                     <!--end of card form-->
+                    </section>
                 </div>
                 <!--end of one list-->
               {% endfor %}
             {% endif %}
+
+
+                    <!--div for  list form-->
+                    <div class="listFormDiv col-md-2 col-sm-3 col-xs-4">
+                        <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
+                        <form method="POST" id="listForm"> {% csrf_token %}
+                            {{ listform }}<br>
+                            <input type="submit" class="btn btn-info btn-md submitList" value="Add">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </form>
+                    </div>
+
+                <!--container div-->
+                </div>
             </div> <!--end of div for all lists-->
 
-            <!--div for  list form-->
-            <div class="listFormDiv col-md-2 col-sm-3 col-xs-4">
-                <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
-                <form method="POST" id="listForm"> {% csrf_token %}
-                    {{ listform }}<br>
-                    <input type="submit" class="btn btn-info btn-md submitList" value="Add">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </form>
-            </div>
 
-        <!--container div-->
-        </div>
 
 
     </body>

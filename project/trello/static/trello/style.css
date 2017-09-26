@@ -15,6 +15,14 @@ body {
     clear: both;
 }
 
+.cardList li {
+    margin: 3px;
+}
+
+.list-group-item:hover {
+    background-color:#979aa0;
+}
+
 .glyphicon {
     font-size: 20px;
 }
@@ -40,20 +48,30 @@ input[type="submit"] {
 }
 
 .oneList {
-    background-color:#e8ede6;
-    border-radius: 5px;
+    float: left;
+
+    /*margin: 2px;*/
 }
+
+.alllistDiv {
+    flex-wrap: wrap;
+    display: flex;
+}
+
 
 .oneList h4 {
     float: left;
+    margin-left: 15px;
     font-weight: bold;
     text-align: center;
 }
 
-.listHeader{
-    flex-wrap: wrap;
-
+.wrapper {
+    background-color:#e8ede6;
+    border-radius: 5px;
 }
+
+
 .dropMenuList, .dropMenuList:hover {
     color: black !important;
     font-weight:bold;
@@ -66,6 +84,10 @@ input[type="submit"] {
     border-radius: 30px;
     background-color: rgba(244, 176, 66, 0) !important;
     border: 0px;
+}
+
+.glyphicon-pencil {
+    float: right;
 }
 
 .dropMenuList:active,

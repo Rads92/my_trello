@@ -1,19 +1,20 @@
 $(document).ready(function(){
 
+    //refreshing events afer ajax call
+    $('.dropdown-toggle').dropdown();
 
     //Hide and show list form
 	$(".listFormDiv").on("click",".addList", function(e){
 	    $(this).parent().css('background-color', '#e8ede6')
 		$(this).next("#listForm").toggle();
 		$(this).hide();
-
 	});
+
 //    Hie and show card form
 	$(".alllistDiv").on("click",".addCard", function(e){
 		$(this).next(".cardForm").toggle();
 		$(this).hide();
 	});
-
 
 	$(".container-fluid").on("click",".glyphicon-remove", function(e){
 		$(this).parent().hide();
@@ -21,6 +22,9 @@ $(document).ready(function(){
 		$(this).closest(".listFormDiv").css('background-color', '')
 	});
 
+
+//    textarea
+    $("textarea").attr("rows", "4");
 
     // Hide carret in dropdown button
     $(".oneList").find(".caret").css("display","none");
@@ -40,9 +44,10 @@ $(document).ready(function(){
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(){
-                $( ".alllistDiv" ).load( window.location.href );
+                $( "body" ).load( window.location.href );
                 console.log("dodano");
                 $("#listForm").find("#id_name").val("");
+
 
             }
         });
@@ -61,11 +66,12 @@ $(document).ready(function(){
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(){
-                $(".alllistDiv").load(window.location.href);
-//                $( ".oneList" ).load( "" );
-                $(".cardForm").find("#id_name").val("")
-                $(".cardForm").find("#id_description").val(""),
-                console.log("dodano karte")
+                $("body").load(window.location.href);
+                $(".cardForm").find("#id_name").val("");
+                $(".cardForm").find("#id_description").val("");
+                console.log("dodano karte");
+
+
 
             }
         });
