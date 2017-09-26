@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-    //refreshing events afer ajax call
+//refreshing events afer ajax call
     $('.dropdown-toggle').dropdown();
 
-    //Hide and show list form
+//Hide and show list form
 	$(".listFormDiv").on("click",".addList", function(e){
 	    $(this).parent().css('background-color', '#e8ede6')
 		$(this).next("#listForm").toggle();
@@ -26,8 +26,22 @@ $(document).ready(function(){
 //    textarea
     $("textarea").attr("rows", "4");
 
-    // Hide carret in dropdown button
+// Hide carret in dropdown button
     $(".oneList").find(".caret").css("display","none");
+
+//    Hide and show form in modal
+    $(".form-content").on("click", ".cardListModal", function(){
+        $(".modalFormCard").toggle();
+        $(this).hide();
+    });
+
+    $(".modal-content").on("click",".glyphicon-remove", function(e){
+		$(this).parent().hide();
+		$(this).parent().prev().show();
+		$(this).closest(".listFormDiv").css('background-color', '')
+	});
+
+
 
 //Creating lists
     $("#listForm").on("submit", function(e){
@@ -76,6 +90,54 @@ $(document).ready(function(){
             }
         });
     })
+
+//    Insert data to edit form in modals
+
+        $(".carditem").on("click", function(e){
+        var id = $(this).data('id');
+
+        $.ajax({
+              dataType: "json",
+              url: "detail_card/"+id,
+              data: { get_param: 'value' },
+              success: function(data){
+                console.log(data);
+                $(".modal-title").text(data.name);
+                $(".modal-card-content").text(data.description);
+                ;
+                $(".modalFormCard").find("#id_name").val(data.name);
+                $(".modalFormCard").find("#id_description").val(data.description);
+                $(".modalFormCard").attr("data-id", data.id);
+              }
+            });
+        });
+
+
+//    Editing cards
+        $(".modalFormCard").on("submit", function(e){
+        e.preventDefault();
+        var cardId = $(this).data('id');
+        $.ajax({
+            type: "POST",
+            url: "/trello/edit_card/"+cardId,
+            data: {
+                name:$(this).find("#id_name").val(),
+                description:$(this).find("#id_description").val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success: function(){
+                $('#modal').modal('toggle');
+                $("body").load(window.location.href);
+//                $(".cardForm").find("#id_name").val("");
+//                $(".cardForm").find("#id_description").val("");
+                console.log("dodano karte");
+
+
+
+            }
+        });
+    })
+
 
 
 });

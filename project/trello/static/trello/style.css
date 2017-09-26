@@ -1,16 +1,46 @@
+/* global styling */
 body {
     background-color: #4289f4;
 }
 
-.listFormDiv {
 
-    border-radius: 5px;
+.wrapper {
+    background-color:#e8ede6;
+    border-radius: 6px;
 }
 
+form, button {
+    width: 100%;
+    padding: 5px;
+}
+
+input[type="submit"] {
+    width: 30%;
+}
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand {
+    float:none;
+}
+
+textarea {
+    resize: none;
+}
+
+
+/* global ends*/
+
+
+/*forms hide*/
 .cardForm, #listForm {
     display:none;
 }
 
+/* cards style */
 .cardList {
     clear: both;
 }
@@ -23,41 +53,24 @@ body {
     background-color:#979aa0;
 }
 
-.glyphicon {
-    font-size: 20px;
+.glyphicon-pencil {
+    float: right;
 }
 
-form, button {
-    width: 100%;
-    padding: 5px;
-}
-
-input[type="submit"] {
-    width: 30%;
-}
+/* cards style end*/
 
 
-.navbar-header {
-    float: left;
-    padding: 15px;
-    text-align: center;
-    width: 100%;
-}
-.navbar-brand {
-    float:none;
-}
 
+/* list styling*/
 .oneList {
     float: left;
-
-    /*margin: 2px;*/
+    margin-bottom: 10px;
 }
 
 .alllistDiv {
     flex-wrap: wrap;
     display: flex;
 }
-
 
 .oneList h4 {
     float: left;
@@ -66,28 +79,32 @@ input[type="submit"] {
     text-align: center;
 }
 
-.wrapper {
+.addCard {
     background-color:#e8ede6;
-    border-radius: 5px;
+    color: black;
+    border: 0px;
 }
 
+.addCard:hover {
+    background-color:#979aa0;
+    color: black;
+    border: 0px;
+}
 
+/* list styling end*/
+
+
+/* drop menu list styling*/
 .dropMenuList, .dropMenuList:hover {
     color: black !important;
     font-weight:bold;
     position: relative;
     text-align: left;
-    /*float: right;*/
-    /*margin-left: 60%;*/
     width: 30px;
     height: 30px;
     border-radius: 30px;
     background-color: rgba(244, 176, 66, 0) !important;
     border: 0px;
-}
-
-.glyphicon-pencil {
-    float: right;
 }
 
 .dropMenuList:active,
@@ -104,4 +121,53 @@ input[type="submit"] {
 .pull-right>.dropdown-menu {
     right: auto !important;
     left: 0;
+}
+/* dropmenu styling ends*/
+
+
+/* Modal style*/
+@media (min-width: 768px)
+.modal-dialog {
+    width: 800px;
+}
+
+.side-menu {
+    /*float: right;*/
+}
+
+.side-menu a, .submitList-modal {
+    width: 80%;
+    margin-top: 4px;
+}
+
+.form-content div {
+    margin-left: 10px;
+    font-size: 16px;
+}
+
+.modalFormCard {
+    display: none;
+}
+
+.form-content h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.form-content form {
+    padding-top: 0px;
+}
+
+.modal-title {
+
+}/*
+
+.modalFormCard {
+    margin-top: -3px;
+}*/
+
+.form-content, .side-menu {
+  vertical-align: middle;
+  line-height: 1;
 }

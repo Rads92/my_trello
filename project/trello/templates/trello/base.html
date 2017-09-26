@@ -62,7 +62,7 @@
 
                                 <ul class="list-group" >
                                 {% for card in list.card_set.all %}
-                                    <li class="list-group-item">{{ card.name }} <span class="glyphicon glyphicon-pencil"></span> </li>
+                                    <li class="list-group-item carditem" data-id="{{ card.id }}" data-toggle="modal" data-target="#modal">{{ card.name }} <span class="glyphicon glyphicon-pencil"></span> </li>
                                 {% endfor %}
                                 </ul>
                             {% endif %}
@@ -71,7 +71,7 @@
                     </div>
                     <!--card form-->
                     <div class="cardFormContainer">
-                        <button type="button" class="btn btn-primary addCard btn-sm">Add card</button>
+                        <button type="button" class="btn btn-primary addCard btn-md">Add card</button>
                         <form method="POST" class="cardForm" data-id="{{ list.id }}"> {% csrf_token %}
                             {{ cardform }}<br>
                             <input type="submit" class="btn btn-info btn-md submitList" value="Add">
@@ -88,17 +88,59 @@
 
                     <!--div for  list form-->
                     <div class="listFormDiv col-md-2 col-sm-3 col-xs-4">
+                        <section class="wrapper">
                         <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
                         <form method="POST" id="listForm"> {% csrf_token %}
                             {{ listform }}<br>
                             <input type="submit" class="btn btn-info btn-md submitList" value="Add">
                             <span class="glyphicon glyphicon-remove"></span>
                         </form>
+                        </section>
                     </div>
 
                 <!--container div-->
                 </div>
             </div> <!--end of div for all lists-->
+
+
+
+<!--The modal container for card-->
+        <div class="modal fade" id="modal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="row">
+                        <!--form and content-->
+                        <section class="form-content col-md-6 col-sm-6 col-xs-12">
+                            <div class="cardListModal">
+                                <h3 class="modal-title"></h3><hr>
+                                <p class="modal-card-content"></p>
+                            </div>
+
+                            <form method="POST" data-id="" class="modalFormCard"> {% csrf_token %}
+                                <h3>Editing...</h3><hr>
+                                {{ cardform.as_p }}
+                                <input type="submit" class="btn btn-info btn-md submitList-modal" value="Edit">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </form>
+                        </section>
+                        <!--side bar-->
+                        <section class="side-menu col-md-6 col-sm-6 col-xs-12">
+                            <h3>Card menu</h3><hr>
+                            <a href="#" class="btn btn-info" role="button">Move</a><br>
+                            <a href="#" class="btn btn-info" role="button">Copy</a><br>
+                            <a href="#" class="btn btn-info" role="button">Delete</a><br>
+                        </section>
+                    </div>
+
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
 
 
