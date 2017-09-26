@@ -1,0 +1,85 @@
+body {
+    background-color: #4289f4;
+}
+
+.listFormDiv {
+
+    border-radius: 5px;
+}
+
+.cardForm, #listForm {
+    display:none;
+}
+
+.cardList {
+    clear: both;
+}
+
+.glyphicon {
+    font-size: 20px;
+}
+
+form, button {
+    width: 100%;
+    padding: 5px;
+}
+
+input[type="submit"] {
+    width: 30%;
+}
+
+
+.navbar-header {
+    float: left;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+.navbar-brand {
+    float:none;
+}
+
+.oneList {
+    background-color:#e8ede6;
+    border-radius: 5px;
+}
+
+.oneList h4 {
+    float: left;
+    font-weight: bold;
+    text-align: center;
+}
+
+.listHeader{
+    flex-wrap: wrap;
+
+}
+.dropMenuList, .dropMenuList:hover {
+    color: black !important;
+    font-weight:bold;
+    position: relative;
+    text-align: left;
+    /*float: right;*/
+    /*margin-left: 60%;*/
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    background-color: rgba(244, 176, 66, 0) !important;
+    border: 0px;
+}
+
+.dropMenuList:active,
+.dropMenuList:focus,
+.dropMenuList:target,
+.dropMenuList:active:focus,
+.dropMenuList:active {
+    color: black !important;
+    background-color: rgba(244, 176, 66, 0) !important;
+    border: 0px;
+
+}
+
+.pull-right>.dropdown-menu {
+    right: auto !important;
+    left: 0;
+}

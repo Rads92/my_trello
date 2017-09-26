@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Trello</title>
+        {% load staticfiles %}
+        {% load static %}
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--My css-->
+        <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
+        <!--JS-->
+        <script src="{% static 'trello/app.js' %}" type=""></script>
+    </head>
+    <body>
+        <!--navbar-->
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">My Trello</a>
+            </div>
+          </div>
+        </nav>
+
+        <!--container div-->
+        <div class="container-fluid">
+            <!--Div for all lists-->
+            <div class="alllistDiv">
+             {% if alllist %}
+              {% for list in alllist %}
+                <!--div for one list-->
+                <div class="oneList col-md-2 col-sm-3 col-xs-4">
+                    <div class="listHeader">
+                        <h4>{{ list.name }}</h4>
+
+                        <!--menu for list-->
+                        <div class="dropdown pull-right">
+                          <button class="btn btn-primary dropdown-toggle dropMenuList" type="button" data-toggle="dropdown">...
+                          </button>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#">HTML</a></li>
+                            <li><a href="#">CSS</a></li>
+                            <li><a href="#">JavaScript</a></li>
+                          </ul>
+                        </div>
+                        <!--end of menu-->
+                        <div class="cardList">
+
+
+                            {% if list.card_set.all %}
+                                <ul>
+                                {% for card in list.card_set.all %}
+                                    <li>{{ card.name }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <!--card form-->
+                    <div class="cardFormContainer">
+                        <button type="button" class="btn btn-primary addCard btn-sm">Add card</button>
+                        <form method="POST" class="cardForm" data-id="{{ list.id }}"> {% csrf_token %}
+                            {{ cardform }}<br>
+                            <input type="submit" class="btn btn-info btn-md submitList" value="Add">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </form>
+                    </div>
+                    <!--end of card form-->
+                </div>
+                <!--end of one list-->
+              {% endfor %}
+            {% endif %}
+            </div> <!--end of div for all lists-->
+
+            <!--div for  list form-->
+            <div class="listFormDiv col-md-2 col-sm-3 col-xs-4">
+                <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
+                <form method="POST" id="listForm"> {% csrf_token %}
+                    {{ listform }}<br>
+                    <input type="submit" class="btn btn-info btn-md submitList" value="Add">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </form>
+            </div>
+
+        <!--container div-->
+        </div>
+
+
+    </body>
+</html>
