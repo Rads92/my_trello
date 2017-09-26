@@ -126,9 +126,21 @@
                         <!--side bar-->
                         <section class="side-menu col-md-6 col-sm-6 col-xs-12">
                             <h3>Card menu</h3><hr>
-                            <a href="#" class="btn btn-info" role="button">Move</a><br>
-                            <a href="#" class="btn btn-info" role="button">Copy</a><br>
-                            <a href="#" class="btn btn-info" role="button">Delete</a><br>
+                            <a href="#" class="btn btn-info cardMove" role="button">Move</a><br>
+                            {% if alllist %}
+                            <form id="moveCardForm">
+                                <div class="form-group">
+                                  <select class="form-control" id="listOption">
+                                    {% for list in alllist %}
+                                    <option>{{ list.name }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                                <button type="submit" class="btn btn-default">Move</button>
+                            </form>
+                            {% endif %}
+                            <a href="#" class="btn btn-info cardCopy" role="button">Copy</a><br>
+                            <a href="#" class="btn btn-info cardDelete" role="button">Delete</a><br>
                         </section>
                     </div>
 

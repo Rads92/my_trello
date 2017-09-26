@@ -43,6 +43,13 @@ class CardEdit(View):
         card.save()
         return HttpResponse("Edytowano")
 
+class CardDelete(View):
+    def post(self, request, pk):
+        card = Card.objects.get(pk=int(pk))
+        card.delete()
+        return HttpResponse("usunieto")
+
+
 
 class CardDetail(APIView):
 

@@ -131,11 +131,12 @@ textarea {
     width: 800px;
 }
 
-.side-menu {
-    /*float: right;*/
+
+.side-menu form {
+    display: none;
 }
 
-.side-menu a, .submitList-modal {
+.side-menu a, .submitList-modal, .side-menu form {
     width: 80%;
     margin-top: 4px;
 }
@@ -161,11 +162,7 @@ textarea {
 
 .modal-title {
 
-}/*
-
-.modalFormCard {
-    margin-top: -3px;
-}*/
+}
 
 .form-content, .side-menu {
   vertical-align: middle;
