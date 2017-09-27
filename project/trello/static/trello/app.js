@@ -38,16 +38,17 @@ $(document).ready(function(){
         $(this).hide();
     });
 
-//    Hide and show form in modal
+//    Hide and show form in modal     te hide n show mozna przerobic na jedno
+
     $(".form-content").on("click", ".cardListModal", function(){
         $(".modalFormCard").toggle();
         $(this).hide();
     });
 
+// Exit from modal's form
     $(".modal-content").on("click",".glyphicon-remove", function(e){
 		$(this).parent().hide();
-		$(this).parent().prev().show();
-		$(this).closest(".listFormDiv").css('background-color', '')
+		$(this).parent().prev().toggle();
 	});
 
 
@@ -113,11 +114,11 @@ $(document).ready(function(){
                 console.log(data);
                 $(".modal-title").text(data.name);
                 $(".modal-card-content").text(data.description);
-                ;
                 $(".modalFormCard").find("#id_name").val(data.name);
                 $(".modalFormCard").find("#id_description").val(data.description);
                 $(".modalFormCard").attr("data-id", data.id);
                 $(".modalFormCard").attr("data-listid", data.list);
+                $('[data-listidselect='+data.list+']').prop('selected', true);
               }
             });
         });
@@ -165,11 +166,10 @@ $(document).ready(function(){
 // Copy card
         $(".side-menu").on("click", ".cardCopy", function(e){
             e.preventDefault();
-            var form = $(this).parent().prev().find(".modalFormCard")
-            var name = form.find("#id_name").val();
-            var description = form.find("#id_description").val();
-            var cardId = form.data('id');
-            var listID = form.data('listid');
+            var name = $(".modalFormCard").find("#id_name").val();
+            var description = $(".modalFormCard").find("#id_description").val();
+            var cardId = $(".modalFormCard").data('id')
+            var listID = $(".modalFormCard").data('listid');
             $.ajax({
                 type: "POST",
                 url: "/trello/create_card",
@@ -183,6 +183,26 @@ $(document).ready(function(){
                     $('#modal').modal('toggle');
                     $("body").load(window.location.href);
                     console.log("skopiowano karte");
+                }
+            })
+
+        })
+
+// Moving card from one list to another
+        $(".side-menu").on("click", ".moveButton", function(e){
+            e.preventDefault();
+            var cardId = $(".modalFormCard").data('id')
+            $.ajax({
+                type: "POST",
+                url: "/trello/edit_card/"+cardId,
+                data: {
+                    list: $('#listOption').find(":selected").data('listidselect'),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(){
+                    $('#modal').modal('toggle');
+                    $("body").load(window.location.href);
+                    console.log("przeniesiono karte");
                 }
             })
 

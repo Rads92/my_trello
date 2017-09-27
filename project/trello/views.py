@@ -37,9 +37,14 @@ class CardCreate(View):
 
 class CardEdit(View):
     def post(self, request, pk):
+        # import pdb; pdb.set_trace()
         card = Card.objects.get(pk=int(pk))
-        card.name = request.POST['name']
-        card.description = request.POST['description']
+        if request.POST.get('name'):
+            card.name = request.POST.get('name')
+        if request.POST.get('description'):
+            card.description = request.POST.get('description')
+        if request.POST.get('list'):
+            card.list=List.objects.get(pk=int(request.POST['list']))
         card.save()
         return HttpResponse("Edytowano")
 

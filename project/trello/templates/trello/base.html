@@ -33,7 +33,7 @@
              {% if alllist %}
               {% for list in alllist %}
                 <!--div for one list-->
-                <div class="oneList col-md-2 col-sm-3 col-xs-4">
+                <div class="oneList col-md-3 col-sm-4 col-xs-6">
                     <section class="wrapper">
                     <div class="listHeader">
                         <h4>{{ list.name }}</h4>
@@ -87,7 +87,7 @@
 
 
                     <!--div for  list form-->
-                    <div class="listFormDiv col-md-2 col-sm-3 col-xs-4">
+                    <div class="listFormDiv col-md-3 col-sm-4 col-xs-6">
                         <section class="wrapper">
                         <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
                         <form method="POST" id="listForm"> {% csrf_token %}
@@ -126,17 +126,19 @@
                         <!--side bar-->
                         <section class="side-menu col-md-6 col-sm-6 col-xs-12">
                             <h3>Card menu</h3><hr>
-                            <a href="#" class="btn btn-info cardMove" role="button">Move</a><br>
+                            <a href="#" class="btn btn-info cardMove" role="button">Move</a>
                             {% if alllist %}
                             <form id="moveCardForm">
+                                <span class="glyphicon glyphicon-remove" style="float:right;"></span>
                                 <div class="form-group">
                                   <select class="form-control" id="listOption">
                                     {% for list in alllist %}
-                                    <option>{{ list.name }}</option>
+                                    <option data-listidselect="{{ list.id }}">{{ list.name }}</option>
                                       {% endfor %}
+
                                   </select>
                                 </div>
-                                <button type="submit" class="btn btn-default">Move</button>
+                                <button type="submit" class="btn btn-default moveButton">Move</button>
                             </form>
                             {% endif %}
                             <a href="#" class="btn btn-info cardCopy" role="button">Copy</a><br>

@@ -132,7 +132,7 @@ textarea {
 }
 
 
-.side-menu form {
+.side-menu form, .modalFormCard  {
     display: none;
 }
 
@@ -146,9 +146,6 @@ textarea {
     font-size: 16px;
 }
 
-.modalFormCard {
-    display: none;
-}
 
 .form-content h3 {
     margin-top: 20px;
@@ -160,9 +157,6 @@ textarea {
     padding-top: 0px;
 }
 
-.modal-title {
-
-}
 
 .form-content, .side-menu {
   vertical-align: middle;
