@@ -1,163 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>My Trello</title>
-        {% load staticfiles %}
-        {% load static %}
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <!--My css-->
-        <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
-        <!--JS-->
-        <script src="{% static 'trello/app.js' %}" type=""></script>
-    </head>
-    <body>
-        <!--navbar-->
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">My Trello</a>
-            </div>
-          </div>
-        </nav>
+<head>
+    <meta charset="UTF-8">
+    <title>My Trello</title>
+    {% load staticfiles %}
+    {% load static %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--My css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
+    <!--JS-->
+    <script src="{% static 'trello/app.js' %}" type=""></script>
+</head>
+<body>
+<!--navbar-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Trello</a>
+        </div>
+    </div>
+</nav>
 
-        <!--container div-->
-        <div class="container-fluid">
-            <!--Div for all lists-->
-            <div class="row alllistDiv">
-             {% if alllist %}
-              {% for list in alllist %}
-                <!--div for one list-->
-                <div class="oneList col-md-3 col-sm-4 col-xs-6">
-                    <section class="wrapper">
-                    <div class="listHeader">
-                        <h4>{{ list.name }}</h4>
+<!--container div-->
+<div class="container-fluid">
+    <!--Div for all lists-->
+    <div class="row alllistDiv">
+        {% if alllist %}
+        {% for list in alllist %}
+        <!--div for one list-->
+        <div class="oneList col-md-3 col-sm-4 col-xs-6">
+            <section class="wrapper">
+                <div class="listHeader">
+                    <h4>{{ list.name }}</h4>
 
-                        <!--menu for list-->
-                        <div class="dropdown pull-right">
-                          <button class="btn btn-primary dropdown-toggle dropMenuList" type="button" data-toggle="dropdown">...
-                          </button>
-                          <ul class="dropdown-menu dropdown-menu-right" id="dropMenuList">
+                    <!--menu for list-->
+                    <div class="dropdown pull-right">
+                        <button class="btn btn-primary dropdown-toggle dropMenuList" type="button"
+                                data-toggle="dropdown">...
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" id="dropMenuList">
                             <li class="dropdown-header">Action list</li>
                             <li class="divider"></li>
-                            <li><a href="#">Copy list</a></li>
-                            <li><a href="#">Delete list</a></li>
+                            <li><a href="#" data-id="{{ list.id }}" class="copylist">Copy list</a></li>
+                            <li><a href="#" data-id="{{ list.id }}" class="dellist">Delete list</a></li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Cards list</li>
                             <li class="divider"></li>
-                            <li><a href="#">Move all cards</a></li>
-                            <li><a href="#">Delete all cards</a></li>
-                          </ul>
-                        </div>
-                        <!--end of menu-->
-
-                        <!--card list-->
-                        <div class="cardList">
-                            {% if list.card_set.all %}
-
-                                <ul class="list-group" >
-                                {% for card in list.card_set.all %}
-                                    <li class="list-group-item carditem" data-id="{{ card.id }}" data-toggle="modal" data-target="#modal">{{ card.name }} <span class="glyphicon glyphicon-pencil"></span> </li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-
+                            <li data-toggle="modal"
+                                data-target="#move-all-cards"><a href="#" data-id="{{ list.id }}" class="move-all-btn">Move all cards</a></li>
+                            <li><a href="#" data-id="{{ list.id }}" class="delallcards">Delete all cards</a></li>
+                        </ul>
                     </div>
-                    <!--card form-->
-                    <div class="cardFormContainer">
-                        <button type="button" class="btn btn-primary addCard btn-md">Add card</button>
-                        <form method="POST" class="cardForm" data-id="{{ list.id }}"> {% csrf_token %}
-                            {{ cardform }}<br>
-                            <input type="submit" class="btn btn-info btn-md submitList" value="Add">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </form>
+                    <!--end of menu-->
+
+                    <!--card list-->
+                    <div class="cardList">
+                        {% if list.card_set.all %}
+
+                        <ul class="list-group">
+                            {% for card in list.card_set.all %}
+                            <li class="list-group-item carditem" data-id="{{ card.id }}" data-toggle="modal"
+                                data-target="#modal">{{ card.name }} <span class="glyphicon glyphicon-pencil"></span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
                     </div>
-                    <!--end of card form-->
-                    </section>
+
                 </div>
-                <!--end of one list-->
-              {% endfor %}
-            {% endif %}
-
-
-                    <!--div for  list form-->
-                    <div class="listFormDiv col-md-3 col-sm-4 col-xs-6">
-                        <section class="wrapper">
-                        <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
-                        <form method="POST" id="listForm"> {% csrf_token %}
-                            {{ listform }}<br>
-                            <input type="submit" class="btn btn-info btn-md submitList" value="Add">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </form>
-                        </section>
-                    </div>
-
-                <!--container div-->
+                <!--card form-->
+                <div class="cardFormContainer">
+                    <button type="button" class="btn btn-primary addCard btn-md">Add card</button>
+                    <form method="POST" class="cardForm" data-id="{{ list.id }}"> {% csrf_token %}
+                        {{ cardform }}<br>
+                        <input type="submit" class="btn btn-info btn-md submitList" value="Add">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </form>
                 </div>
-            </div> <!--end of div for all lists-->
+                <!--end of card form-->
+            </section>
+        </div>
+        <!--end of one list-->
+        {% endfor %}
+        {% endif %}
 
+
+        <!--div for  list form-->
+        <div class="listFormDiv col-md-3 col-sm-4 col-xs-6">
+            <section class="wrapper">
+                <button type="button" class="btn btn-primary addList btn-lg">Add list</button>
+                <form method="POST" id="listForm"> {% csrf_token %}
+                    {{ listform }}<br>
+                    <input type="submit" class="btn btn-info btn-md submitList" value="Add">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </form>
+            </section>
+        </div>
+
+        <!--container div-->
+    </div>
+</div> <!--end of div for all lists-->
 
 
 <!--The modal container for card-->
-        <div class="modal fade" id="modal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="row">
-                        <!--form and content-->
-                        <section class="form-content col-md-6 col-sm-6 col-xs-12">
-                            <div class="cardListModal">
-                                <h3 class="modal-title"></h3><hr>
-                                <p class="modal-card-content"></p>
-                            </div>
-
-                            <form method="POST" data-id="" class="modalFormCard"> {% csrf_token %}
-                                <h3>Editing...</h3><hr>
-                                {{ cardform.as_p }}
-                                <input type="submit" class="btn btn-info btn-md submitList-modal" value="Edit">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </form>
-                        </section>
-                        <!--side bar-->
-                        <section class="side-menu col-md-6 col-sm-6 col-xs-12">
-                            <h3>Card menu</h3><hr>
-                            <a href="#" class="btn btn-info cardMove" role="button">Move</a>
-                            {% if alllist %}
-                            <form id="moveCardForm">
-                                <span class="glyphicon glyphicon-remove" style="float:right;"></span>
-                                <div class="form-group">
-                                  <select class="form-control" id="listOption">
-                                    {% for list in alllist %}
-                                    <option data-listidselect="{{ list.id }}">{{ list.name }}</option>
-                                      {% endfor %}
-
-                                  </select>
-                                </div>
-                                <button type="submit" class="btn btn-default moveButton">Move</button>
-                            </form>
-                            {% endif %}
-                            <a href="#" class="btn btn-info cardCopy" role="button">Copy</a><br>
-                            <a href="#" class="btn btn-info cardDelete" role="button">Delete</a><br>
-                        </section>
+<div class="modal fade" id="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="row">
+                <!--form and content-->
+                <section class="form-content col-md-6 col-sm-6 col-xs-12">
+                    <div class="cardListModal">
+                        <h3 class="modal-title"></h3>
+                        <hr>
+                        <p class="modal-card-content"></p>
                     </div>
 
+                    <form method="POST" data-id="" class="modalFormCard"> {% csrf_token %}
+                        <h3>Editing...</h3>
+                        <hr>
+                        {{ cardform.as_p }}
+                        <input type="submit" class="btn btn-info btn-md submitList-modal" value="Edit">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </form>
+                </section>
+                <!--side bar-->
+                <section class="side-menu col-md-6 col-sm-6 col-xs-12">
+                    <h3>Card menu</h3>
+                    <hr>
+                    <a href="#" class="btn btn-info cardMove" role="button">Move</a>
+                    {% if alllist %}
+                    <form id="moveCardForm">
+                        <span class="glyphicon glyphicon-remove" style="float:right;"></span>
+                        <div class="form-group">
+                            <select class="form-control" id="listOption">
+                                {% for list in alllist %}
+                                <option data-listidselect="{{ list.id }}">{{ list.name }}</option>
+                                {% endfor %}
 
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default moveButton">Move</button>
+                    </form>
+                    {% endif %}
+                    <a href="#" class="btn btn-info cardCopy" role="button">Copy</a><br>
+                    <a href="#" class="btn btn-info cardDelete" role="button">Delete</a><br>
+                </section>
             </div>
 
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
+    </div>
+</div>
+
+<!--The modal container for card-->
+<div class="modal fade" id="move-all-cards" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="row">
+              <form>
+                  <div class="form-group">
+                      <select class="form-control" id="">
+                          {% for list in alllist %}
+                          <option data-listidselect="{{ list.id }}">{{ list.name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  <button type="submit" class="btn btn-default move-all-cards">Move</button>
+              </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
 
-
-
-
-    </body>
+</body>
 </html>

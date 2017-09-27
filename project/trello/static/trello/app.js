@@ -52,7 +52,6 @@ $(document).ready(function(){
 	});
 
 
-
 //Creating lists
     $("#listForm").on("submit", function(e){
         $(this).hide();
@@ -68,7 +67,7 @@ $(document).ready(function(){
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(){
-                $( "body" ).load( window.location.href );
+                location.reload();
                 console.log("dodano");
                 $("#listForm").find("#id_name").val("");
 
@@ -90,7 +89,7 @@ $(document).ready(function(){
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
             },
             success: function(){
-                $("body").load(window.location.href);
+                location.reload();
                 $(".cardForm").find("#id_name").val("");
                 $(".cardForm").find("#id_description").val("");
                 console.log("dodano karte");
@@ -138,7 +137,7 @@ $(document).ready(function(){
                 },
                 success: function(){
                     $('#modal').modal('toggle');
-                    $("body").load(window.location.href);
+                    location.reload();
                     console.log("dodano karte");
                 }
             });
@@ -155,7 +154,7 @@ $(document).ready(function(){
                 data: {csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()},
                 success: function(){
                     $('#modal').modal('toggle');
-                    $("body").load(window.location.href);
+                    location.reload();
                     console.log("usunieto karte");
                 }
             })
@@ -181,7 +180,7 @@ $(document).ready(function(){
                 },
                 success: function(){
                     $('#modal').modal('toggle');
-                    $("body").load(window.location.href);
+                    location.reload();
                     console.log("skopiowano karte");
                 }
             })
@@ -201,14 +200,58 @@ $(document).ready(function(){
                 },
                 success: function(){
                     $('#modal').modal('toggle');
-                    $("body").load(window.location.href);
+                    location.reload();
                     console.log("przeniesiono karte");
                 }
             })
 
         })
+// copy list
+        $(".dropdown").on("click", ".copylist", function(e){
+            e.preventDefault();
+            console.log("jestem tu")
+            var listid = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "/trello/copy_list/"+listid,
+                data: {csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()},
+                success: function(){
+                    location.reload();
+                    console.log("skopiowano liste");
+                }
+            })
+        });
+//  removing list
+        $(".dropdown").on("click", ".dellist", function(e){
+            e.preventDefault();
+            console.log("tu tex");
+            var listid = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "/trello/delete_list/"+listid,
+                data: {csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()},
+                success: function(){
+                    location.reload();
+                    console.log("usunieto liste");
+                }
+            })
+        })
 
-
+// removing all cards
+        $(".dropdown").on("click", ".delallcards", function(e){
+            e.preventDefault();
+            console.log("tu tex");
+            var listid = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "/trello/delete_allcards/"+listid,
+                data: {csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()},
+                success: function(){
+                    location.reload();
+                    console.log("usunieto wszystkie karty");
+                }
+            })
+        })
 
 });
 

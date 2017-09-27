@@ -1,12 +1,11 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from trello.forms import *
 from trello.models import *
 from trello.serializers import CardSerializer
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 
 
 # Create your views here.
@@ -27,6 +26,35 @@ class ListCreate(View):
         return HttpResponse("Jest")
 
 
+class ListCopy(View):
+    def post(self, request, pk):
+        # import pdb; pdb.set_trace()
+        obj = List.objects.get(pk=int(pk))
+        cards = obj.card_set.all()
+        obj.pk = None
+        obj.save()
+        for card in cards:
+            card.pk = None
+            card.list = obj
+            card.save()
+        return HttpResponse("Jest")
+
+
+class ListDelete(View):
+    def post(self, request, pk):
+        list = List.objects.get(pk=int(pk))
+        list.delete()
+        return HttpResponse("usunieto")
+
+
+class DeleteAllCards(View):
+    def post(self, request, pk):
+        list = List.objects.get(pk=int(pk))
+        for card in list.card_set.all():
+            card.delete()
+        return HttpResponse("")
+
+
 class CardCreate(View):
     def post(self, request):
         name = request.POST["name"]
@@ -34,6 +62,7 @@ class CardCreate(View):
         list = List.objects.get(pk=int(request.POST["list"]))
         Card.objects.create(name=name, description=description, list=list)
         return HttpResponse("Jest")
+
 
 class CardEdit(View):
     def post(self, request, pk):
@@ -44,9 +73,10 @@ class CardEdit(View):
         if request.POST.get('description'):
             card.description = request.POST.get('description')
         if request.POST.get('list'):
-            card.list=List.objects.get(pk=int(request.POST['list']))
+            card.list = List.objects.get(pk=int(request.POST['list']))
         card.save()
         return HttpResponse("Edytowano")
+
 
 class CardDelete(View):
     def post(self, request, pk):
@@ -55,10 +85,8 @@ class CardDelete(View):
         return HttpResponse("usunieto")
 
 
-
 class CardDetail(APIView):
-
     def get(self, request, pk):
-        card=Card.objects.get(pk=int(pk))
+        card = Card.objects.get(pk=int(pk))
         serializer = CardSerializer(card)
         return Response(serializer.data)

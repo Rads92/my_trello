@@ -9,7 +9,12 @@ app_name = 'trello'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', BaseView.as_view(), name="base"),
+
     url(r'^create_list$', ListCreate.as_view(), name="create_list"),
+    url(r'^copy_list/(?P<pk>[0-9]+)$', ListCopy.as_view(), name="copy_list"),
+    url(r'^delete_list/(?P<pk>[0-9]+)$', ListDelete.as_view(), name="delete_list"),
+    url(r'^delete_allcards/(?P<pk>[0-9]+)$', DeleteAllCards.as_view(), name="delete_lists_cards"),
+
 
     url(r'^create_card$', CardCreate.as_view(), name="create_card"),
     url(r'^edit_card/(?P<pk>[0-9]+)$', CardEdit.as_view(), name="edit_card"),
