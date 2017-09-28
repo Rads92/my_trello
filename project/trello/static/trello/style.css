@@ -119,11 +119,10 @@ textarea {
 
 }
 
-
-.pull-right>.dropdown-menu {
-    right: auto !important;
-    left: 0;
+.dropmenu-wrapper {
+    float: right;
 }
+
 /* dropmenu styling ends*/
 
 
@@ -168,4 +167,9 @@ textarea {
 #move-all-cards form, #move-all-cards .modal-footer {
     width: 80%;
     margin: auto;
+}
+
+.second-modal {
+    float:right;
+    width:10%;
 }

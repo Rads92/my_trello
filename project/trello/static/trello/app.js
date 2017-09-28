@@ -5,7 +5,6 @@ $(document).ready(function(){
 
 //Hide and show list form
 	$(".listFormDiv").on("click",".addList", function(e){
-	    $(this).parent().css('background-color', '#e8ede6')
 		$(this).next("#listForm").toggle();
 		$(this).hide();
 	});
@@ -19,7 +18,6 @@ $(document).ready(function(){
 	$(".container-fluid").on("click",".glyphicon-remove", function(e){
 		$(this).parent().hide();
 		$(this).parent().prev().show();
-		$(this).closest(".listFormDiv").css('background-color', '')
 	});
 
 
@@ -38,7 +36,7 @@ $(document).ready(function(){
         $(this).hide();
     });
 
-//    Hide and show form in modal     te hide n show mozna przerobic na jedno
+//    Hide and show form in modal
 
     $(".form-content").on("click", ".cardListModal", function(){
         $(".modalFormCard").toggle();
@@ -50,6 +48,15 @@ $(document).ready(function(){
 		$(this).parent().hide();
 		$(this).parent().prev().toggle();
 	});
+
+
+// Insert data to second modal
+    $(".dropdown").on("click", ".move-all-btn", function(e){
+        var listid = $(this).data("id");
+        $("#move-all-cards").find(".form-control").attr("data-listid", listid);
+        $('[data-listidselect='+listid+']').prop('selected', true);
+    });
+
 
 
 //Creating lists
@@ -70,8 +77,10 @@ $(document).ready(function(){
                 location.reload();
                 console.log("dodano");
                 $("#listForm").find("#id_name").val("");
-
-
+            },
+            error: function (thrownError) {
+                location.reload();
+                alert(thrownError);
             }
         });
     })
@@ -93,9 +102,10 @@ $(document).ready(function(){
                 $(".cardForm").find("#id_name").val("");
                 $(".cardForm").find("#id_description").val("");
                 console.log("dodano karte");
-
-
-
+            },
+            error: function (thrownError) {
+                location.reload();
+                alert(thrownError);
             }
         });
     })
@@ -118,7 +128,11 @@ $(document).ready(function(){
                 $(".modalFormCard").attr("data-id", data.id);
                 $(".modalFormCard").attr("data-listid", data.list);
                 $('[data-listidselect='+data.list+']').prop('selected', true);
-              }
+              },
+              error: function (thrownError) {
+                  location.reload();
+                  alert(thrownError);
+               }
             });
         });
 
@@ -139,6 +153,10 @@ $(document).ready(function(){
                     $('#modal').modal('toggle');
                     location.reload();
                     console.log("dodano karte");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             });
         })
@@ -156,6 +174,10 @@ $(document).ready(function(){
                     $('#modal').modal('toggle');
                     location.reload();
                     console.log("usunieto karte");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
 
@@ -182,6 +204,10 @@ $(document).ready(function(){
                     $('#modal').modal('toggle');
                     location.reload();
                     console.log("skopiowano karte");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
 
@@ -202,6 +228,10 @@ $(document).ready(function(){
                     $('#modal').modal('toggle');
                     location.reload();
                     console.log("przeniesiono karte");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
 
@@ -218,6 +248,10 @@ $(document).ready(function(){
                 success: function(){
                     location.reload();
                     console.log("skopiowano liste");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
         });
@@ -233,6 +267,10 @@ $(document).ready(function(){
                 success: function(){
                     location.reload();
                     console.log("usunieto liste");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
         })
@@ -249,8 +287,36 @@ $(document).ready(function(){
                 success: function(){
                     location.reload();
                     console.log("usunieto wszystkie karty");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
                 }
             })
+        })
+
+//Move all cards
+        $("#move-all-cards").on("click", ".move-all-cardsbtn", function(e){
+            e.preventDefault();
+            var listid = $(this).prev().find(".form-control").data('listid');
+            console.log(listid);
+            $.ajax({
+                type: "POST",
+                url: "/trello/delete_allcards/"+listid,
+                data: {
+                    newlist: $('#moveallcards').find(":selected").data('listidselect'),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                success: function(){
+                    location.reload();
+                    console.log("przeniesiono wszystkie karty");
+                },
+                error: function (thrownError) {
+                    location.reload();
+                    alert(thrownError);
+                }
+            })
+
         })
 
 });

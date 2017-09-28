@@ -49,10 +49,18 @@ class ListDelete(View):
 
 class DeleteAllCards(View):
     def post(self, request, pk):
-        list = List.objects.get(pk=int(pk))
-        for card in list.card_set.all():
-            card.delete()
+        # import pdb; pdb.set_trace()
+        listOld = List.objects.get(pk=int(pk))
+        for card in listOld.card_set.all():
+            if request.POST.get("newlist"):
+                new = List.objects.get(pk=int(request.POST.get("newlist")))
+                card.list = new
+                card.save()
+            else:
+                card.delete()
         return HttpResponse("")
+
+
 
 
 class CardCreate(View):
