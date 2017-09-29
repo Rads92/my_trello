@@ -52,7 +52,7 @@ $(document).ready(function(){
 
 // Insert data to second modal
     $(".dropdown").on("click", ".move-all-btn", function(e){
-        var listid = $(this).data("id");
+        var listid = $(this).parent().parent().data("id");
         $("#move-all-cards").find(".form-control").attr("data-listid", listid);
         $('[data-listidselect='+listid+']').prop('selected', true);
     });
@@ -240,7 +240,7 @@ $(document).ready(function(){
         $(".dropdown").on("click", ".copylist", function(e){
             e.preventDefault();
             console.log("jestem tu")
-            var listid = $(this).data('id');
+            var listid = $(this).parent().parent().data("id");
             $.ajax({
                 type: "POST",
                 url: "/trello/copy_list/"+listid,
@@ -259,7 +259,7 @@ $(document).ready(function(){
         $(".dropdown").on("click", ".dellist", function(e){
             e.preventDefault();
             console.log("tu tex");
-            var listid = $(this).data('id');
+            var listid = $(this).parent().parent().data("id");
             $.ajax({
                 type: "POST",
                 url: "/trello/delete_list/"+listid,
@@ -279,7 +279,7 @@ $(document).ready(function(){
         $(".dropdown").on("click", ".delallcards", function(e){
             e.preventDefault();
             console.log("tu tex");
-            var listid = $(this).data('id');
+            var listid = $(this).parent().parent().data("id");
             $.ajax({
                 type: "POST",
                 url: "/trello/delete_allcards/"+listid,

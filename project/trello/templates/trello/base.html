@@ -5,12 +5,15 @@
     <title>My Trello</title>
     {% load staticfiles %}
     {% load static %}
+
+
+
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'trello/css/bootstrap.min.css' %} ">
     <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static 'trello/js/jquery-3.2.1.min.js' %}"></script>
     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'trello/js/bootstrap.min.js' %}"></script>
     <!--My css-->
     <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
     <!--JS-->
@@ -44,19 +47,17 @@
                             <button class="btn btn-primary dropdown-toggle dropMenuList" type="button"
                                     data-toggle="dropdown">...
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-right" id="dropMenuList">
+                            <ul class="dropdown-menu dropdown-menu-right" data-id="{{ list.id }}" id="dropMenuList">
                                 <li class="dropdown-header">Action list</li>
                                 <li class="divider"></li>
-                                <li><a href="#" data-id="{{ list.id }}" class="copylist">Copy list</a></li>
-                                <li><a href="#" data-id="{{ list.id }}" class="dellist">Delete list</a></li>
+                                <li><a href="#" class="copylist">Copy list</a></li>
+                                <li><a href="#" class="dellist">Delete list</a></li>
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Cards list</li>
                                 <li class="divider"></li>
                                 <li data-toggle="modal"
-                                    data-target="#move-all-cards"><a href="#" data-id="{{ list.id }}"
-                                                                     class="move-all-btn">Move
-                                    all cards</a></li>
-                                <li><a href="#" data-id="{{ list.id }}" class="delallcards">Delete all cards</a></li>
+                                    data-target="#move-all-cards"><a href="#" class="move-all-btn">Move all cards</a></li>
+                                <li><a href="#" class="delallcards">Delete all cards</a></li>
                             </ul>
                         </div>
                     </section>

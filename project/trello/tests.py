@@ -25,11 +25,13 @@ class ListTest(TestCase):
     def test_list_func(self):
         # index
         response = self.client.get('/trello/')
+
         self.failUnlessEqual(response.status_code, 200)
 
         # create a list - result: list -1
 
         response = self.client.post("/trello/create_list", {"name": "test"})
+
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(List.objects.latest('id').name, "test")
 
@@ -45,6 +47,7 @@ class ListTest(TestCase):
         # copy list - result: lists -2, cards -2
 
         response = self.client.post("/trello/copy_list/" + str(List.objects.latest('id').id))
+
         self.failUnlessEqual(response.status_code, 200)
         self.assertEqual(List.objects.all().count(), 2)
         self.assertEqual(Card.objects.all().count(), 2)
@@ -80,6 +83,28 @@ class ListTest(TestCase):
 
         # deleting a list with latest id and its cards
         response = self.client.post("/trello/delete_list/" + str(List.objects.latest('id').id))
+
         self.failUnlessEqual(response.status_code, 200)
         self.assertEqual(Card.objects.all().count(), 1)
         self.assertEqual(List.objects.all().count(), 1)
+
+        #editing card
+        response = self.client.post("/trello/edit_card/"+ str(Card.objects.latest('id').id), {"name": "edit",
+                                                            "description": "edit",
+                                                            })
+
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertEqual(Card.objects.latest('id').name, "edit")
+        self.assertEqual(Card.objects.latest('id').description, "edit")
+
+        #checking connection with detail card
+        response = self.client.get("/trello/detail_card/" + str(Card.objects.latest('id').id))
+
+        self.failUnlessEqual(response.status_code, 200)
+
+
+        #deleting cards
+        response = self.client.post("/trello/delete_card/" + str(Card.objects.latest('id').id))
+
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertEqual(Card.objects.all().count(), 0)
