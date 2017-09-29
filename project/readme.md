@@ -1,0 +1,1 @@
+This is an app, which is similar to Trello app. It's a single board, where you can add named lists and cards with titles and description to these lists.
