@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trello - login</title>
+    {% load staticfiles %}
+    {% load static %}
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'trello/css/bootstrap.min.css' %} ">
+    <!-- jQuery library -->
+    <script src="{% static 'trello/js/jquery-3.2.1.min.js' %}"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="{% static 'trello/js/bootstrap.min.js' %}"></script>
+    <!--My css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
+    <!--JS-->
+    <script src="{% static 'trello/app.js' %}" type=""></script>
+</head>
+<body>
+<!--navbar-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Trello</a>
+        </div>
+    </div>
+</nav>
+
+<!--container div-->
+<div class="container-fluid">
+    <div class="text-center col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12 " style="padding:50px 0">
+        <div class="logo"></div>
+        <h3 >
+            {% if msg %}
+            {{ msg }}
+            {% endif %}
+        </h3>
+        <!-- Main Form -->
+        <div class="login-form-1">
+            <form id="login-form" class="text-left" method="post">
+                {% csrf_token %}
+    
+
+                <div class="main-login-form">
+                    <div class="login-group">
+                        <div class="form-group">
+                            <label for="lg_username" class="sr-only">Username</label>
+                            <input type="text" class="form-control" id="lg_username" name="username" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="lg_password" class="sr-only">Password</label>
+                            <input type="password" class="form-control" id="lg_password" name="password" placeholder="Password">
+                        </div>
+                        <button type="submit" class="login-button"><span class="glyphicon glyphicon-menu-right"></span></button>
+                    </div>
+                </div>
+                <div class="etc-login-form">
+                    <p>new user? <a href="{% url 'trello:signup' %}">create new account</a></p>
+                </div>
+            </form>
+        </div>
+    
+    </div>
+</div>
+</body>
+</html>

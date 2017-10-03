@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Trello</title>
+    {% load staticfiles %}
+    {% load static %}
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'trello/css/bootstrap.min.css' %} ">
+    <!-- jQuery library -->
+    <script src="{% static 'trello/js/jquery-3.2.1.min.js' %}"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="{% static 'trello/js/bootstrap.min.js' %}"></script>
+    <!--My css-->
+    <link rel="stylesheet" type="text/css" href="{% static 'trello/style.css' %}">
+    <!--JS-->
+    <script src="{% static 'trello/app.js' %}" type=""></script>
+</head>
+<body>
+<!--navbar-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">My Trello</a>
+        </div>
+    </div>
+</nav>
+
+<!--container div-->
+<div class="container-fluid">
+    <div class="row main">
+        <div class="panel-heading">
+           <div class="panel-title text-center">
+                   <h1 class="title">Wyrypa</h1>
+                   <hr />
+               </div>
+        </div>
+
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="post">
+        {% if msg%}
+        {{ msg }}
+        {% endif %}
+          {% csrf_token %}
+          {% for field in form %}
+              <div class="form-group">
+                    <label for="name" class="cols-sm-2 control-label">{{ field.label_tag }}</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user " aria-hidden="true"></span></span>
+                        {{ field }}
+
+                        </div>
+                    </div>
+                </div>
+               {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            {% endfor %}
+
+          <button type="submit">Sign up</button>
+        </form>
+        </div>
+    </div>
+    
+</div>
+</body>
+</html>

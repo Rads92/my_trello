@@ -9,6 +9,9 @@ app_name = 'trello'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', BaseView.as_view(), name="base"),
+    url(r'^login$', LoginView.as_view(), name="login"),
+    url(r'^signup$', SignupView.as_view(), name="signup"),
+    url(r'^logout$', logout_view, name="logout"),
 
     url(r'^create_list$', ListCreate.as_view(), name="create_list"),
     url(r'^copy_list/(?P<pk>[0-9]+)$', ListCopy.as_view(), name="copy_list"),
